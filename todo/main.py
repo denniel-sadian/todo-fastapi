@@ -7,9 +7,6 @@ from .db import database
 
 app = FastAPI(title=settings.APP_NAME)
 
-app.include_router(users_router)
-app.include_router(items_router)
-
 
 @app.on_event('startup')
 async def startup() -> None:
@@ -21,3 +18,7 @@ async def startup() -> None:
 async def shutdown() -> None:
     if database.is_connected:
         await database.disconnect()
+
+
+app.include_router(users_router)
+app.include_router(items_router)
