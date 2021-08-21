@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; python manage.py rundev'
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    environment:
+      PORT: 8000
+      POSTGRES_DB_URL: postgresql://todo:todo@db:5432/todo
+      MONGODB_URL: mongodb://todo:todo@mongo:27017/
+      SECRET_KEY: 2277584df3082521a512083e5535dcca1f6daf5c3e49a940593694cf950f0258
+      MONGO_DB: todo
+    depends_on:
+      - db
+      - mongo
+  db:
+    image: postgres:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    expose:
+      - 5432
+    environment:
+      POSTGRES_USER: todo
+      POSTGRES_PASSWORD: todo
+      POSTGRES_DB: todo
+  mongo:
+    image: mongo
+    volumes:
+      - mongo_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: todo
+      MONGO_INITDB_ROOT_PASSWORD: todo
+
+volumes:
+  postgres_data:
+  mongo_data:

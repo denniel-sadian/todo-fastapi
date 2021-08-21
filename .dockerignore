@@ -1,0 +1,30 @@
+# Git administrative files
+.git*
+
+# Python bytecode files
+**/__pycache__
+
+# Python build files
+build
+dist
+*.egg-info
+
+# Docker-specific files
+Dockerfile
+.dockerignore
+docker-compose*.yml
+
+# Installation-specific environment variables
+env
+.env
+*.db
+
+# IDE metadata files
+*.sublime-*
+
+# static files
+public/static/*
+public/media/*
+*.xml
+*.rst
+*.md
